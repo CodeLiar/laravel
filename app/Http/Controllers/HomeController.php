@@ -16,7 +16,7 @@ class HomeController extends Controller
         $articles = \App\Article::all();
         forEach ($articles as $article)
         {
-            echo $article;
+            echo $article->title;
             // var_dump($article->$title);
         }
         return view('home')->with('articles', \App\Article::all());
