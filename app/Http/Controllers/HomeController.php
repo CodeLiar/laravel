@@ -13,7 +13,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        echo \App\Article::all();
+        $articles = \App\Article::all();
+        forEach ($articles as article)
+        {
+            var_dump(article)
+        }
         return view('home')->with('articles', \App\Article::all());
     }
 }
