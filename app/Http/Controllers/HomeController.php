@@ -13,6 +13,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home')->withArticles(\App\Article::all());
+        return var_dump(\App\Article::all());
+        // return view('home')->with('articles', \App\Article::all());
     }
 }
