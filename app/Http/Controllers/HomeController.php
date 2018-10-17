@@ -26,4 +26,9 @@ class HomeController extends Controller
         $models = \App\MyModel::all();
         print $models;
     }
+
+    public function mytest2() {
+        $models = \App\MyModel2::all();
+        print $models;
+    }
 }
