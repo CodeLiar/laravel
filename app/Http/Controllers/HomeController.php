@@ -21,4 +21,9 @@ class HomeController extends Controller
         }
         return view('home')->with('articles', \App\Article::all());
     }
+
+    public function mytest() {
+        $models = \App\MyModel::all();
+        print $models;
+    }
 }
