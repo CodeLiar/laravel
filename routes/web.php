@@ -21,4 +21,4 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/my_test', 'HomeController@mytest')->name('test');
 Route::get('/my_test2', 'HomeController@mytest2')->name('test2');
 
-Route::get('/login', 'LoginViewController@index')->name('login');
+Route::get('/login', 'LoginController@index')->name('login');
