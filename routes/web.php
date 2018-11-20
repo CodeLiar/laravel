@@ -20,6 +20,6 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/my_test', 'HomeController@mytest')->name('test');
 Route::get('/my_test2', 'HomeController@mytest2')->name('test2');
-Route::post('/logan_upload', 'LoganUploadController@upload')->name('logan_upload')
+Route::post('/logan_upload', 'LoganUploadController@upload')->name('logan_upload');
 
 Route::get('/login', 'LoginController@index')->name('login');
