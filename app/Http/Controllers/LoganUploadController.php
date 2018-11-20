@@ -8,6 +8,7 @@ class LoganUploadController extends Controller
 {
     public function upload(Request $request)
     {
-        return $request.get('body');
+        var_dump($request);
+        //return $request.get('body');
     }
 }
