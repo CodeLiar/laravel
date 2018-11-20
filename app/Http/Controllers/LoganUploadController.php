@@ -23,4 +23,8 @@ class LoganUploadController extends Controller
         }
         exit('未获取到上传文件或上传过程出错');
     }
+
+    public function uploadFile(Request $request) {
+        return $request->getContent();
+    }
 }
