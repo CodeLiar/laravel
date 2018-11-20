@@ -13,7 +13,7 @@ class LoganUploadController extends Controller
             $extension = $photo->extension();
             //$store_result = $photo->store('photo');
             $store_result = $photo->storeAs('photo', 'test.jpg');
-            $filename = $photo->filename();
+            $filename = $photo->getFilename();
             $output = [
                 'extension' => $extension,
                 'filename' => $filename,
