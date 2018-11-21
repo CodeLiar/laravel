@@ -40,8 +40,16 @@ class LoganUploadController extends Controller
             if ($start == 1) {
                 $contentLen = (((ord($buf[$skips])) & 0xFF) << 24) | (((ord($buf[$skips+1])) & 0xFF) << 16)  | (((ord($buf[$skips+2])) & 0xFF) << 8) | ((ord($buf[$skips+3])) & 0xFF);
                 $skips += 4;
-                $skips += $contentLen;
+                if ($skips + $contentLen > strlen($buf)) {
+                    $skips -= 4;
+                    $this->decode($buf, $skips);
+                    return ;
+                }
+                $content = substr($buf, $skips, $skips + $contentLen);
                 Log::info('dmj --> contentLen --> '. $contentLen);
+                Log::info('dmj --> content    --> '. strlen($content));
+
+                $skips += $contentLen;
                 $this->decode($buf, $skips);
             } else {
                 $this->decode($buf, $skips);
