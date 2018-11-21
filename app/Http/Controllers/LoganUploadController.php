@@ -28,7 +28,6 @@ class LoganUploadController extends Controller
     public function uploadFile(Request $request) {
         Log::info('dmj --> laravel_log');
         $content = $request->getContent();
-	    var_dump($content);
         $this->decode($content, 0);
         return $content;
     }
@@ -45,12 +44,21 @@ class LoganUploadController extends Controller
                     $this->decode($buf, $skips);
                     return ;
                 }
-                $content = substr($buf, $skips, $skips + $contentLen);
-                Log::info('dmj --> skips      --> '. $skips);
-                Log::info('dmj --> contentLen --> '. $contentLen);
-                Log::info('dmj --> content    --> '. strlen($content));
-
+                $content = substr($buf, $skips, $contentLen);
                 $skips += $contentLen;
+                $iv = "0123456789012345";
+                $key = "0123456789012345";
+                $decrypted = mcrypt_decrypt(
+                    MCRYPT_RIJNDAEL_128,
+                    $key,
+                    base64_decode($content),
+                    MCRYPT_MODE_CBC,
+                    $iv
+                );
+                $dec_s = strlen($decrypted);
+                $padding = ord($decrypted[$dec_s-1]);
+                $decrypted = substr($decrypted, 0, -$padding);
+                var_dump($decrypted);
                 $this->decode($buf, $skips);
             } else {
                 $this->decode($buf, $skips);
