@@ -48,16 +48,7 @@ class LoganUploadController extends Controller
                 $skips += $contentLen;
                 $iv = "0123456789012345";
                 $key = "0123456789012345";
-                $decrypted = mcrypt_decrypt(
-                    MCRYPT_RIJNDAEL_128,
-                    $key,
-                    base64_decode($content),
-                    MCRYPT_MODE_CBC,
-                    $iv
-                );
-                $dec_s = strlen($decrypted);
-                $padding = ord($decrypted[$dec_s-1]);
-                $decrypted = substr($decrypted, 0, -$padding);
+                $decrypted = @openssl_decrypt($content, "AES-128-CBC", $key, "OPENSSL_ZERO_PADDING", $iv);
                 var_dump($decrypted);
                 $this->decode($buf, $skips);
             } else {
