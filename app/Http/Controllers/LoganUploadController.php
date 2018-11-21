@@ -46,6 +46,7 @@ class LoganUploadController extends Controller
                     return ;
                 }
                 $content = substr($buf, $skips, $skips + $contentLen);
+                Log::info('dmj --> skips      --> '. $skips);
                 Log::info('dmj --> contentLen --> '. $contentLen);
                 Log::info('dmj --> content    --> '. strlen($content));
 
