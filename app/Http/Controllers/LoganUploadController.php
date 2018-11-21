@@ -27,7 +27,7 @@ class LoganUploadController extends Controller
 
     public function uploadFile(Request $request) {
         Log::info('dmj --> laravel_log');
-        $content = $request-getContent();
+        $content = $request->getContent();
         $this->decode($content, 0);
         return $content;
     }
