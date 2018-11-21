@@ -38,7 +38,7 @@ class LoganUploadController extends Controller
             $start = ord($buf[$skips]);
             $skips ++;
             if ($start == 1) {
-                $contentLen = (((ord($buf[skips])) & 0xFF) << 24) | (((ord($buf[skips+1])) & 0xFF) << 16)  | (((ord($buf[skips+2])) & 0xFF) << 8) | ((ord($buf[skips+3])) & 0xFF);
+                $contentLen = (((ord($buf[$skips])) & 0xFF) << 24) | (((ord($buf[$skips+1])) & 0xFF) << 16)  | (((ord($buf[$skips+2])) & 0xFF) << 8) | ((ord($buf[$skips+3])) & 0xFF);
                 $skips += 4;
                 $skips += $contentLen;
                 Log::info('dmj --> contentLen --> '. $contentLen);
