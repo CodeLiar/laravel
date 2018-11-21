@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LoganUploadController extends Controller
 {
@@ -25,6 +26,7 @@ class LoganUploadController extends Controller
     }
 
     public function uploadFile(Request $request) {
+        Log::info('dmj --> laravel_log');
         return $request->getContent();
     }
 }
