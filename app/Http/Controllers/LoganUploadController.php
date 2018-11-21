@@ -28,17 +28,22 @@ class LoganUploadController extends Controller
     public function uploadFile(Request $request) {
         Log::info('dmj --> laravel_log');
         $content = $request->getContent();
+	var_dump($content);
         $this->decode($content, 0);
         return $content;
     }
 
     private function decode($buf, $skips) {
         Log::info('dmj --> decode');
+	Log::info('dmj --> length --> '.strlen($buf));
         if ($skips < strlen($buf)) {
-            $start = buf.charAt($skips);
+            $start = ord($buf[$skips]);
+	    #Log::info('dmj --> start asc --> '. $start);
+	    #Log::info('dmj --> start char --> '. $buf[$skips]);
             $skips ++;
-            if ($start == '1') {
+            if ($start == 1) {
                 Log::info('dmj --> start');
+                $this->decode($buf, $skips);
             } else {
                 $this->decode($buf, $skips);
             }
