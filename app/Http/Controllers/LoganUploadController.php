@@ -33,7 +33,7 @@ class LoganUploadController extends Controller
     }
 
     private function decode($buf, $skips) {
-        if ($skips < strlen($buf)) {
+        f ($skips < strlen($buf)) {
             $start = ord($buf[$skips]);
             $skips ++;
             if ($start == 1) {
@@ -47,10 +47,23 @@ class LoganUploadController extends Controller
                 $content = substr($buf, $skips, $contentLen);
                 $skips += $contentLen;
                 $decrypted = $this->decrypt($content);
-                dd(gzdecode($decrypted));
-                //$file = "enc_temp.gz";
-                //file_put_contents($file, $decrypted);
-                //unlink($file);
+                $file = "enc_temp.gz";
+                $destination = "dec_temp.txt";
+                file_put_contents($file, $decrypted);
+
+                //实例化对象
+                $zip = new ZipArchive() ;
+                //打开zip文档，如果打开失败返回提示信息
+                if ($zip->open($file) !== TRUE) {
+                  die ("Could not open archive");
+                }
+                //将压缩文件解压到指定的目录下
+                $zip->extractTo($destination);
+                //关闭zip文档
+                $zip->close();
+                echo 'Archive extracted to directory';
+
+                unlink($file);
 
                 $this->decode($buf, $skips);
             } else {
