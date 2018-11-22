@@ -46,14 +46,33 @@ class LoganUploadController extends Controller
                 }
                 $content = substr($buf, $skips, $contentLen);
                 $skips += $contentLen;
-                $iv = "0123456789012345";
-                $key = "0123456789012345";
-                $decrypted = @openssl_decrypt($content, "AES-128-CBC", $key, "OPENSSL_ZERO_PADDING", $iv);
+                $decrypted = $this->decrypt($contnet);
                 var_dump($decrypted);
                 $this->decode($buf, $skips);
             } else {
                 $this->decode($buf, $skips);
             }
         }
+    }
+
+    public function decrypt($encrypted) {
+        $method = "AES-128-CBC";
+        $iv = "0123456789012345";
+        $key = "0123456789012345";
+        $options = OPENSSL_RAW_DATA | OPENSSL_NO_PADDING;
+        $sign = @openssl_decrypt($encrypted, $method, $key, $options, $iv);
+        $sign = $this->unPkcsPadding($sign);
+        $sign = rtrim($sign);
+        return $sign;
+    }
+
+
+    public function unPkcsPadding($str)
+    {
+        $pad = ord($str[strlen($str) - 1]);
+        if ($pad > strlen($str)) {
+            return false;
+        }
+        return substr($str, 0, -1 * $pad);
     }
 }
