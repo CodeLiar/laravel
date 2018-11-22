@@ -47,7 +47,10 @@ class LoganUploadController extends Controller
                 $content = substr($buf, $skips, $contentLen);
                 $skips += $contentLen;
                 $decrypted = $this->decrypt($content);
-                var_dump($decrypted);
+                $file = "../../../storage/app/temp/enc_temp.gz";
+                file_put_contents($file, $decrypted);
+                unlink($file);
+
                 $this->decode($buf, $skips);
             } else {
                 $this->decode($buf, $skips);
