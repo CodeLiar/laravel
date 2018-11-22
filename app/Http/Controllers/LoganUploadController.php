@@ -33,7 +33,7 @@ class LoganUploadController extends Controller
     }
 
     private function decode($buf, $skips) {
-        f ($skips < strlen($buf)) {
+        if ($skips < strlen($buf)) {
             $start = ord($buf[$skips]);
             $skips ++;
             if ($start == 1) {
