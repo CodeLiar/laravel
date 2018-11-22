@@ -51,10 +51,12 @@ class LoganUploadController extends Controller
                 $destination = "dec_temp.txt";
                 file_put_contents($file, $decrypted);
 
+                $zipfile = "../../../storage/app/public/enc_temp.gz";
+
                 //实例化对象
                 $zip = new ZipArchive() ;
                 //打开zip文档，如果打开失败返回提示信息
-                if ($zip->open($file) !== TRUE) {
+                if ($zip->open($zipfile) !== TRUE) {
                   die ("Could not open archive");
                 }
                 //将压缩文件解压到指定的目录下
