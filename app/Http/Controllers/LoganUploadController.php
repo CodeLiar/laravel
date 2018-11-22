@@ -46,7 +46,7 @@ class LoganUploadController extends Controller
                 }
                 $content = substr($buf, $skips, $contentLen);
                 $skips += $contentLen;
-                $decrypted = $this->decrypt($contnet);
+                $decrypted = $this->decrypt($content);
                 var_dump($decrypted);
                 $this->decode($buf, $skips);
             } else {
