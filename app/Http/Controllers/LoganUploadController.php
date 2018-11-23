@@ -52,7 +52,7 @@ class LoganUploadController extends Controller
                 $data = zip_decode($decrypted);
 
                 $destination = "dec_temp.txt";
-                file_put_contents($file, $data, FILE_APPEND);
+                file_put_contents($destination, $data, FILE_APPEND);
 
 
                 $this->decode($buf, $skips);
