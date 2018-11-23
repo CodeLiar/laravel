@@ -28,6 +28,8 @@ class LoganUploadController extends Controller
     public function uploadFile(Request $request) {
         Log::info('dmj --> laravel_log');
         $content = $request->getContent();
+        $destination = "dec_temp.txt";
+        unlink($destination);
         $this->decode($content, 0);
         return $content;
     }
@@ -47,32 +49,11 @@ class LoganUploadController extends Controller
                 $content = substr($buf, $skips, $contentLen);
                 $skips += $contentLen;
                 $decrypted = $this->decrypt($content);
+                $data = zip_decode($decrypted);
 
-                var_dump($content);
-                var_dump(unpack('C*', $content));
-                var_dump($decrypted);
-                var_dump(unpack('C*', $decrypted));
-
-
-                $file = "enc_temp.gz";
                 $destination = "dec_temp.txt";
-                file_put_contents($file, $decrypted);
+                file_put_contents($file, $data, FILE_APPEND);
 
-                $zipfile = "../../../storage/app/public/enc_temp.gz";
-
-                //实例化对象
-                $zip = new ZipArchive() ;
-                //打开zip文档，如果打开失败返回提示信息
-                if ($zip->open($zipfile) !== TRUE) {
-                  die ("Could not open archive");
-                }
-                //将压缩文件解压到指定的目录下
-                $zip->extractTo($destination);
-                //关闭zip文档
-                $zip->close();
-                echo 'Archive extracted to directory';
-
-                unlink($file);
 
                 $this->decode($buf, $skips);
             } else {
@@ -88,7 +69,6 @@ class LoganUploadController extends Controller
         $options = OPENSSL_RAW_DATA | OPENSSL_NO_PADDING;
         $sign = @openssl_decrypt($encrypted, $method, $key, $options, $iv);
         $sign = $this->unPkcsPadding($sign);
-        $sign = rtrim($sign);
         return $sign;
     }
 
