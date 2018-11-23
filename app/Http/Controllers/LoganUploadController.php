@@ -29,7 +29,9 @@ class LoganUploadController extends Controller
         Log::info('dmj --> laravel_log');
         $content = $request->getContent();
         $destination = "dec_temp.txt";
-        unlink($destination);
+        if (file_exists($destination) == TRUE) {
+            unlink($destination);
+        }
         $this->decode($content, 0);
         return $content;
     }
