@@ -77,9 +77,16 @@ class LoganUploadController extends Controller
 
     public function unPkcsPadding($str)
     {
-        $pad = ord($str[strlen($str) - 1]);
+        $pad = 0;
+        $pad1 = ord($str[strlen($str) - 1]);
+        $pad2 = ord($str[strlen($str) - 2]);
         if ($pad > strlen($str)) {
             return false;
+        }
+        if ($pad1 > 1 && $pad1 == $pad2) {
+            $pad = $pad1;
+        } else if ($pad1 == 1) {
+            $pad = $pad1;
         }
         return substr($str, 0, -1 * $pad);
     }
