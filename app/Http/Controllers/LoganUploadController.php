@@ -51,8 +51,18 @@ class LoganUploadController extends Controller
                 $content = substr($buf, $skips, $contentLen);
                 $skips += $contentLen;
                 $decrypted = $this->decrypt($content);
-                $data = zlib_decode($decrypted);
 
+                $temp = 'temp.gz';
+                if (file_exists($temp)) {
+                    unlink($temp);
+                }
+                if (strlen($decrypted) == 880) {
+                    echo 'temp';
+                    file_put_contents($temp, $data, FILE_APPEND);
+                }
+
+                return;
+                $data = zlib_decode($decrypted);
                 $destination = "dec_temp.txt";
                 file_put_contents($destination, $data, FILE_APPEND);
 
@@ -85,7 +95,7 @@ class LoganUploadController extends Controller
         }
         if ($pad1 > 1 && $pad1 == $pad2) {
             $pad = $pad1;
-        } else if ($pad1 == 1) {
+        } else if ($pad == 1) {
             $pad = $pad1;
         }
         return substr($str, 0, -1 * $pad);
