@@ -52,21 +52,25 @@ class LoganUploadController extends Controller
                 $skips += $contentLen;
                 $decrypted = $this->decrypt($content);
 
+                // 将解密后的压缩数据写入temp.gz
                 $temp = 'temp.gz';
+                file_put_contents($temp, $decrypted, FILE_APPEND);
+
+                try {
+                    $gzFile = gzopen($temp, 'r');
+                    if ($gzFile) {
+                        $data = gzread($gzFile, 1024 * 1024);
+                        $destination = "dec_temp.txt";
+                        file_put_contents($destination, $data, FILE_APPEND);
+                    }
+                    gzclose($gzFile);
+                } catch (\Exception $e) {
+                    echo $e;
+                }
+
                 if (file_exists($temp)) {
                     unlink($temp);
                 }
-                if (strlen($decrypted) == 880) {
-                    echo 'temp';
-                    file_put_contents($temp, $data, FILE_APPEND);
-                }
-
-                return;
-                $data = zlib_decode($decrypted);
-                $destination = "dec_temp.txt";
-                file_put_contents($destination, $data, FILE_APPEND);
-
-
                 $this->decode($buf, $skips);
             } else {
                 $this->decode($buf, $skips);
